@@ -8,7 +8,8 @@ class Medex extends CI_Controller {
 		$this->load->model('M_Medex','medex');
 	}
 
-	private function load($title = '', $datapath = '', $script){
+	private function load($title = '', $datapath = '', $script)
+	{
 
 		$get = array(
 			"title" => $title,
@@ -26,7 +27,8 @@ class Medex extends CI_Controller {
 		return $page;
 	}
 
-	public function index(){
+	public function index()
+	{
 		$script = 'assets/script/medex.js';
 		$path = "";
 		$data = array(
@@ -69,5 +71,95 @@ class Medex extends CI_Controller {
 		);
         //output to json format
 		echo json_encode($output);
+	}
+
+	// Add Medex
+	public function addMedex()
+	{
+		try {
+			$output = array('error' => false);
+
+			$quotation_number 	= $this->input->post('add_quotation');
+			$remarks 			= $this->input->post('add_remarks');
+			$payment_by 		= $this->input->post('add_payment');
+			$date_receive 		= date('Y-m-d', strtotime($this->input->post('add_date_receive')));
+
+			$data = array(
+				'quotation_number' 	=> $quotation_number,
+				'remarks' 			=> $remarks,
+				'payment_by' 		=> $payment_by,
+				'date_receive' 		=> $date_receive,
+			);
+
+			$add = $this->db->insert('table_medex', $data);
+			if ($add == TRUE) {
+				$output['message'] = 'Data Saved Successfully!';
+			} else {
+				$output['error'] = true;
+				$output['message'] = 'Data Failed to Save!';
+			}
+
+			echo json_encode($output);
+
+		} catch (Exception $e) {
+			
+		}
+	}
+
+	// Edit Medex
+	public function editMedex()
+	{
+		try {
+			$output = array('error' => false);
+
+			$id_ref 			= $this->input->post('edit_id');
+			$quotation_number 	= $this->input->post('edit_quotation');
+			$remarks 			= $this->input->post('edit_remarks');
+			$payment_by 		= $this->input->post('edit_payment');
+			$date_receive 		= date('Y-m-d', strtotime($this->input->post('edit_date_receive')));
+
+			$data = array(
+				'quotation_number' 	=> $quotation_number,
+				'remarks' 			=> $remarks,
+				'payment_by' 		=> $payment_by,
+				'date_receive' 		=> $date_receive,
+			);
+
+			$this->db->where('id_ref', $id_ref);
+			$update = $this->db->update('table_medex', $data);
+			if ($update == TRUE) {
+				$output['message'] = 'Data Saved Successfully!';
+			} else {
+				$output['error'] = true;
+				$output['message'] = 'Data Failed to Save!';
+			}
+
+			echo json_encode($output);
+
+		} catch (Exception $e) {
+			
+		}
+	}
+
+	// Delete Medex
+	public function deleteMedex($id)
+	{
+		try {
+			$output = array('error' => false);
+
+			$id_ref = $id;
+			$delete = $this->db->delete('table_medex',['id_ref'=>$id_ref]);
+
+			if ($delete == TRUE) {
+				$output['message'] = 'Data has been deleted!';
+			} else {
+				$output['error'] = true;
+				$output['message'] = 'Data Failed to Delete!';
+			}
+
+			echo json_encode($output);
+		} catch (Exception $e) {
+			redirect('dashboard/category');
+		}
 	}
 }

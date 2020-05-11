@@ -44,7 +44,7 @@
           <i class="material-icons">clear</i>
         </button>
       </div>
-      <form id="addMedex" method="POST" action="#" class="form-horizontal">
+      <form id="addCasefee" method="POST" action="#" class="form-horizontal">
         <div class="modal-body">
           <div class="form-group mb-3">
             <label class="control-label mb-3">Case ID</label>
@@ -64,7 +64,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-success mr-2">Save</button>
+          <button type="submit" class="btn btn-success mr-2"><span id="addTextCasefee"></span></button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
       </form>
@@ -83,12 +83,12 @@
           <i class="material-icons">clear</i>
         </button>
       </div>
-      <form id="editMedex" method="POST" action="#" class="form-horizontal">
-        <!-- <input type="hidden" name="edit_id" class="form-control" id="edit_id"> -->
+      <form id="editCasefee" method="POST" action="#" class="form-horizontal">
+        <input type="hidden" name="edit_id" class="form-control" id="edit_id">
         <div class="modal-body">
           <div class="form-group mb-3">
             <label class="control-label mb-3">Case Id</label>
-            <input type="text" name="edit_case_id" class="form-control" id="edit_case_id" readonly="">
+            <input type="text" name="edit_case_id" class="form-control" id="edit_case_id">
           </div>
           <div class="form-group mb-3">
             <label class="control-label mb-3">Remarks</label>
@@ -104,7 +104,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-success mr-2">Save</button>
+          <button type="submit" class="btn btn-success mr-2"><span id="editTextCasefee"></span></button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
       </form>

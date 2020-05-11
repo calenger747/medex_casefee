@@ -36,6 +36,7 @@ $(document).ready(function(){
     // $('.select2_single option[value="'+level+'"]').attr('selected','selected');
   });
 
+  // Delete Medex
   $('#medex').on('click','.delete_medex', function(){
     var id =  $(this).data('id');
     swal({
@@ -47,7 +48,7 @@ $(document).ready(function(){
     }).then((result) => {
       if (result) {
         $.ajax({
-          url: "" + id,  
+          url: "http://localhost/medex_casefee/Medex/deleteMedex/" + id,  
           method: "GET",
           beforeSend :function() {
             swal({
@@ -62,8 +63,9 @@ $(document).ready(function(){
             swal({
               title: "Deleted!",
               icon: "success",
-              text: "Data has been deleted",
-              buttons: "Close",
+              text: "Data has been deleted!",
+              timer: 1000,
+              buttons: false,
             });
             medex.ajax.reload();
           }
@@ -71,4 +73,86 @@ $(document).ready(function(){
       }
     })
   });
+
+  // Add Medex
+  $('#addTextMedex').html('Save');
+  $('#addMedex').on('submit', function(e){  
+    e.preventDefault();  
+    $('#addTextMedex').html('Saving ...');
+
+    $.ajax({  
+      url:"http://localhost/medex_casefee/Medex/addMedex",   
+      method:"POST",  
+      data:new FormData(this),  
+      contentType: false,  
+      cache: false,  
+      processData:false,  
+      dataType: "json",
+      success:function(res)  
+      {  
+        console.log(res.error);
+        $('#addTextMedex').html('Save');
+        if(res.error == false){  
+          swal({
+            title: "Success!",
+            text: res.message,
+            icon: "success",
+            timer: 1000,
+            buttons: false,
+          });
+        }
+        else if(res.error == true){
+          swal({
+            title: "Failed!",
+            text: res.message,
+            icon: "error",
+          });
+        }
+        $('#addMedex')[0].reset();
+        $('#myModalAdd').modal('hide');
+        medex.ajax.reload();
+      }  
+    });  
+  });
+
+  // Edit Medex
+  $('#editTextMedex').html('Save');
+  $('#editMedex').on('submit', function(e){  
+    e.preventDefault();  
+    $('#editTextMedex').html('Saving ...');
+
+    $.ajax({  
+      url:"http://localhost/medex_casefee/Medex/editMedex",   
+      method:"POST",  
+      data:new FormData(this),  
+      contentType: false,  
+      cache: false,  
+      processData:false,  
+      dataType: "json",
+      success:function(res)  
+      {  
+        console.log(res.error);
+        $('#editTextMedex').html('Save');
+        if(res.error == false){  
+          swal({
+            title: "Success!",
+            text: res.message,
+            icon: "success",
+            timer: 1000,
+            buttons: false,
+          });
+        }
+        else if(res.error == true){
+          swal({
+            title: "Failed!",
+            text: res.message,
+            icon: "error",
+          });
+        }
+        $('#editMedex')[0].reset();
+        $('#myModalEdit').modal('hide');
+        medex.ajax.reload();
+      }  
+    });  
+  }); 
 });

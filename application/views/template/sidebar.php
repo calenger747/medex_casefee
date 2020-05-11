@@ -44,7 +44,7 @@
       </div>
     </div> -->
     <ul class="nav">
-      <li class="nav-item <?php if($this->uri->segment(1) == 'Medex' || $this->uri->segment(1) == 'medex'){ echo "active"; } ?>">
+      <li class="nav-item <?php if($this->uri->segment(1) == 'Medex' || $this->uri->segment(1) == 'medex' || $this->uri->segment(1) == ''){ echo "active"; } ?>">
         <a class="nav-link" href="<?= base_url(); ?>Medex">
           <i class="material-icons">dashboard</i>
           <p> Medex </p>

@@ -5,7 +5,7 @@ class M_Medex extends CI_Model{
     var $table = 'table_medex'; 
     var $column_order = array(null, 'quotation_number','remarks','payment_by','date_receive'); //set column field database for datatable orderable 
     var $column_search = array('quotation_number','remarks','payment_by','DATE_FORMAT(date_receive, "%d %b %Y")'); //set column field database for datatable searchable 
-    var $order = array('id_ref' => 'asc'); // default order 
+    var $order = array('id_ref' => 'desc'); // default order 
  
     public function __construct()
     {
@@ -17,6 +17,7 @@ class M_Medex extends CI_Model{
     {
          
         $this->db->from($this->table);
+        $this->db->order_by('id_ref','DESC');
  
         $i = 0;
      

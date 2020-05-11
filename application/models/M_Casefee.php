@@ -17,6 +17,7 @@ class M_Casefee extends CI_Model{
     {
          
         $this->db->from($this->table);
+        $this->db->order_by('id_ref','DESC');
  
         $i = 0;
      
