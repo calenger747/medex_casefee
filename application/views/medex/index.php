@@ -12,6 +12,9 @@
           <button class="btn btn-primary" data-toggle="modal" data-target="#myModalAdd">
             Add Data
           </button>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#editBatch">
+            Edit Batch
+          </button>
         </div>
         <div class="material-datatables">
           <table id="medex" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -19,7 +22,7 @@
               <tr>
                 <th width="8%">No</th>
                 <th>Quotation Number</th>
-                <th width="50%">Remarks</th>
+                <th>Remarks</th>
                 <th>Payment By</th>
                 <th>Date Receive</th>
               </tr>
@@ -60,6 +63,33 @@
           <div class="form-group mb-3">
             <label class="control-label mb-3">Date Receive</label>
             <input type="text" name="add_date_receive" class="form-control datepicker">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success mr-2">Save</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  End Modal -->
+
+<!-- Edit Batch -->
+<div class="modal fade" id="editBatch" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Batch</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <i class="material-icons">clear</i>
+        </button>
+      </div>
+      <form id="editBatch" method="POST" action="#" class="form-horizontal">
+        <div class="modal-body">
+          <div class="form-group mb-3">
+            <label class="control-label mb-3">Choose File</label>
+            <input type="file" name="file" class="form-control">
           </div>
         </div>
         <div class="modal-footer">

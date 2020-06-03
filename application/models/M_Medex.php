@@ -3,8 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_Medex extends CI_Model{ 
 
     var $table = 'case_service'; 
-    var $column_order = array(null, 'qa_number','remark','paid_by','date_receive_payment'); //set column field database for datatable orderable 
-    var $column_search = array('qa_number','remark','paid_by','DATE_FORMAT(date_receive_payment, "%d %b %Y")'); //set column field database for datatable searchable 
+    var $column_order = array(null, 'qa_number','bill_remark','paid_by','date_receive_payment'); //set column field database for datatable orderable 
+    var $column_search = array('qa_number','bill_remark','paid_by','DATE_FORMAT(date_receive_payment, "%d %b %Y")'); //set column field database for datatable searchable 
     var $order = array('id_ref' => 'asc'); // default order 
  
     public function __construct()

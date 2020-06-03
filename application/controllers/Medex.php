@@ -52,7 +52,7 @@ class Medex extends CI_Controller {
 			$row = array();
 			$row[] = $no;
 			$row[] = $medex->qa_number;
-			$row[] = $medex->remark;
+			$row[] = $medex->bill_remark;
 			$row[] = $medex->paid_by;
 			$row[] = $date;
 
