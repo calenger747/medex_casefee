@@ -20,6 +20,22 @@ $(document).ready(function(){
     }
   });
 
+  $(".dokumen").change(function() {
+    if (this.files && this.files[0] && this.files[0].name.match(/\.(xlsx|xls|XLSX|XLS)$/) ) {
+      if(this.files[0].size>10485760) {
+        $('.dokumen').val('');
+        alert('Batas Maximal Ukuran File 10MB !');
+      }
+      else {
+        var reader = new FileReader();
+        reader.readAsDataURL(this.files[0]);
+      }
+    } else{
+      $('.dokumen').val('');
+      alert('Hanya File excel Yang Diizinkan !');
+    }
+  });
+
   // Untuk sunting User
   $('#myModalEdit').on('show.bs.modal', function(event) {
     var div = $(event.relatedTarget) // Tombol dimana modal di tampilkan

@@ -21,9 +21,21 @@ $(document).ready(function(){
       url :  'http://localhost/medex_casefee/Medex/showMedex',
       type : 'POST'
     },
-    language: {
-      search: "_INPUT_",
-      searchPlaceholder: "Search records",
+  });
+
+  $(".dokumen").change(function() {
+    if (this.files && this.files[0] && this.files[0].name.match(/\.(xlsx|xls|XLSX|XLS)$/) ) {
+      if(this.files[0].size>10485760) {
+        $('.dokumen').val('');
+        alert('Batas Maximal Ukuran File 10MB !');
+      }
+      else {
+        var reader = new FileReader();
+        reader.readAsDataURL(this.files[0]);
+      }
+    } else{
+      $('.dokumen').val('');
+      alert('Hanya File excel Yang Diizinkan !');
     }
   });
 

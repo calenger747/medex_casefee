@@ -88,8 +88,21 @@
       <form id="editBatch" method="POST" action="#" class="form-horizontal">
         <div class="modal-body">
           <div class="form-group mb-3">
-            <label class="control-label mb-3">Choose File</label>
-            <input type="file" name="file" class="form-control">
+            <h5 class="title">Regular Image</h5>
+            <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+              <!-- <div class="fileinput-new thumbnail">
+                <img src="<?= base_url(); ?>assets/img/excel.jpg" style="width: 50%; height: 50%;" alt="...">
+              </div> -->
+              <div class="fileinput-preview fileinput-exists thumbnail"></div>
+              <div>
+                <span class="btn btn-rose btn-round btn-file">
+                  <span class="fileinput-new">Select File</span>
+                  <span class="fileinput-exists">Change</span>
+                  <input type="file" name="file" class="dokumen" />
+                </span>
+                <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+              </div>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
