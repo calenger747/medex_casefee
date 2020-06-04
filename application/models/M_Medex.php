@@ -73,4 +73,26 @@ class M_Medex extends CI_Model{
         $this->db->from($this->table);
         return $this->db->count_all_results();
     }
+
+    // Upload Format
+    public function upload_file($filename){
+        $this->load->library('upload'); // Load librari upload
+        
+        $config['upload_path'] = './assets/excel/';
+        $config['allowed_types'] = 'xlsx';
+        $config['max_size'] = '10485760';
+        $config['overwrite'] = true;
+        $config['file_name'] = $filename;
+        
+        $this->upload->initialize($config); // Load konfigurasi uploadnya
+        if($this->upload->do_upload('file')){ // Lakukan upload dan Cek jika proses upload berhasil
+            // Jika berhasil :
+            $return = array('result' => 'success', 'file' => $this->upload->data(), 'error' => '');
+            return $return;
+        }else{
+            // Jika gagal :
+            $return = array('result' => 'failed', 'file' => '', 'error' => $this->upload->display_errors());
+            return $return;
+        }
+    }
 }

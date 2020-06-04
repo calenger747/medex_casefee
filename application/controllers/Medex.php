@@ -84,52 +84,53 @@ class Medex extends CI_Controller {
 		// Load plugin PHPExcel nya
 		include APPPATH.'third_party/PHPExcel/PHPExcel.php';
 
-		$upload = $this->dashboard->upload_file($this->filename);
-		
-		$excelreader = new PHPExcel_Reader_Excel2007();
-		$loadexcel = $excelreader->load('assets/excel/'.$this->filename.'.xlsx'); // Load file yang telah diupload ke folder excel
-		$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
-		
-		// Buat sebuah variabel array untuk menampung array data yg akan kita insert ke database
-		$data = array();
-		
-		$numrow = 1;
-		foreach($sheet as $row){
-			if($numrow > 1){
-				// Kita push (add) array data ke variabel data
-				$data, array(
-					'nisn'=>$row['A'], // Insert data nis dari kolom A di excel
-					'nik'=>$row['B'], // Insert data nama dari kolom B di excel
-					'nama'=>$row['C'],
-					'jenis_kelamin'=>$row['D'], // Insert data jenis kelamin dari kolom C di excel
-					'tempat_lahir'=>$row['E'],
-					'tanggal_lahir'=>date('Y-m-d', strtotime($row['F'])),
-					'alamat_alumni'=>$row['G'],
-					'no_telp'=>$row['H'],
-					'email'=>$row['I'], // Insert data alamat dari kolom D di excel
-					'jurusan'=>$row['J'],
-					'tahun_lulus'=>$row['K'],
-					'status'=>$row['L'],
-					'nama_perusahaan'=>$row['M'],
-					'alamat_perusahaan'=>$row['N'],
-					'no_telp_perusahaan'=>$row['O'],
-					'id_sekolah'=>$id_sekolah,
-					'register_date' => date("Y-m-d H:i:s"),
-				);
-			}
-			
-			$numrow++;
-		}
+		$this->load->library('upload'); // Load librari upload
 
-		$upload = $this->db->insert_batch('table_alumni', $data);
-		
-		if($upload) {
-			$this->session->set_flashdata("notif1", "Data Berhasil Disimpan");
-			redirect('dashboardBkk/alumni_bkk');
-		} else {
-			$this->session->set_flashdata("notif2", "Data Gagal Disimpan");
-			redirect('dashboardBkk/alumni_bkk');
+		$config['upload_path'] = './assets/excel/';
+		$config['allowed_types'] = 'xlsx';
+		$config['max_size'] = '10485760';
+		$config['overwrite'] = true;
+		$config['file_name'] = $this->filename;
+
+		$this->upload->initialize($config);
+		if($this->upload->do_upload('file')){
+			$excelreader = new PHPExcel_Reader_Excel2007();
+			$loadexcel = $excelreader->load('assets/excel/'.$this->filename.'.xlsx');
+			$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
+
+			$data = array();
+
+			$numrow = 1;
+			foreach($sheet as $row){
+				if($numrow > 1){
+					array_push($data, array(
+						'qa_number'=>$row['A'], 
+						'bill_remark'=>$row['B'], 
+						'paid_by'=>$row['D'],
+						'date_receive_payment'=> date('Y-m-d', strtotime($row['E'])),
+						'edit_date'=> date("Y-m-d H:i:s"),
+						'edited_by'=> $row['D'],
+					));
+				}
+
+				$numrow++;
+			}
+
+			$upload = $this->db->update_batch('case_service', $data, 'qa_number');
+
+			if($upload) {
+				$this->session->set_flashdata("notif1", "Data Berhasil Disimpan");
+				redirect('Medex');
+			} else {
+				$this->session->set_flashdata("notif2", "Data Gagal Disimpan");
+				redirect('Medex');
+			}
+		}else{
+			$this->session->set_flashdata("notif2", "File Gagal Di Upload");
+			redirect('Medex');
 		}
+		
+		
 		
 	}
 }

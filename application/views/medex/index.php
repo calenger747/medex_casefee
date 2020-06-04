@@ -9,9 +9,9 @@
       </div>
       <div class="card-body">
         <div class="toolbar mt-4 mb-2">
-          <button class="btn btn-primary" data-toggle="modal" data-target="#myModalAdd">
+          <!-- <button class="btn btn-primary" data-toggle="modal" data-target="#myModalAdd">
             Add Data
-          </button>
+          </button> -->
           <button class="btn btn-primary" data-toggle="modal" data-target="#editBatch">
             Edit Batch
           </button>
@@ -85,10 +85,10 @@
           <i class="material-icons">clear</i>
         </button>
       </div>
-      <form id="editBatch" method="POST" action="#" class="form-horizontal">
+      <form id="editBatch" method="POST" action="<?= base_url(); ?>Medex/importMedex" class="form-horizontal"  enctype="multipart/form-data">
         <div class="modal-body">
           <div class="form-group mb-3">
-            <h5 class="title">Regular Image</h5>
+            <h5 class="title">Import Excel</h5>
             <div class="fileinput fileinput-new text-center" data-provides="fileinput">
               <!-- <div class="fileinput-new thumbnail">
                 <img src="<?= base_url(); ?>assets/img/excel.jpg" style="width: 50%; height: 50%;" alt="...">
@@ -154,3 +154,27 @@
   </div>
 </div>
 <!--  End Modal -->
+<?php if ($this->session->flashdata('notif1')): ?>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      swal({
+        title: "Berhasil !",
+        text: "<?php echo $this->session->flashdata('notif1'); ?>",
+        icon: "success",
+        timer: 10000
+      });
+    });
+  </script>
+<?php endif; ?>
+<?php if ($this->session->flashdata('notif2')): ?>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      swal({
+        title: "Maaf !",
+        text: "<?php echo $this->session->flashdata('notif2'); ?>",
+        icon: "error",
+        timer: 10000
+      });
+    });
+  </script>
+  <?php endif; ?>

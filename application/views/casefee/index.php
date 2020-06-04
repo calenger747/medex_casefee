@@ -9,8 +9,11 @@
       </div>
       <div class="card-body">
         <div class="toolbar mt-4 mb-2">
-          <button class="btn btn-primary" data-toggle="modal" data-target="#myModalAdd">
+          <!-- <button class="btn btn-primary" data-toggle="modal" data-target="#myModalAdd">
             Add Data
+          </button> -->
+          <button class="btn btn-primary" data-toggle="modal" data-target="#editBatch">
+            Edit Batch
           </button>
         </div>
         <div class="material-datatables">
@@ -22,7 +25,6 @@
                 <th>Remarks</th>
                 <th>Payment By</th>
                 <th>Date Receive</th>
-                <th class="disabled-sorting text-right" width="5%">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -61,6 +63,46 @@
           <div class="form-group mb-3">
             <label class="control-label mb-3">Date Receive</label>
             <input type="text" name="add_date_receive" class="form-control datepicker">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success mr-2">Save</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  End Modal -->
+
+<!-- Edit Batch -->
+<div class="modal fade" id="editBatch" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Batch</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <i class="material-icons">clear</i>
+        </button>
+      </div>
+      <form id="editBatch" method="POST" action="<?= base_url(); ?>Casefee/importCasefee" class="form-horizontal"  enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="form-group mb-3">
+            <h5 class="title">Import Excel</h5>
+            <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+              <!-- <div class="fileinput-new thumbnail">
+                <img src="<?= base_url(); ?>assets/img/excel.jpg" style="width: 50%; height: 50%;" alt="...">
+              </div> -->
+              <div class="fileinput-preview fileinput-exists thumbnail"></div>
+              <div>
+                <span class="btn btn-rose btn-round btn-file">
+                  <span class="fileinput-new">Select File</span>
+                  <span class="fileinput-exists">Change</span>
+                  <input type="file" name="file" class="dokumen" />
+                </span>
+                <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+              </div>
+            </div>
           </div>
         </div>
         <div class="modal-footer">

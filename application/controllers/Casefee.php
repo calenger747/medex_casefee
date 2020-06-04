@@ -45,18 +45,18 @@ class Casefee extends CI_Controller {
 		foreach ($list as $casefee) {
 			$no++;
 			$row = array();
+
+			if ($casefee->date_receive_payment == NULL || $casefee->date_receive_payment == '' ) {
+				$date = '';
+			} else {
+				$date = date('d M Y', strtotime($casefee->date_receive_payment));
+			}
+
 			$row[] = $no;
 			$row[] = $casefee->case_id;
-			$row[] = $casefee->remarks;
-			$row[] = $casefee->payment_by;
-			$row[] = date('d M Y', strtotime($casefee->date_receive));
-			$row[] = '<a class="nav-link btn-sm float-right" href="#" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<i class="material-icons">more_vert</i>
-			</a>
-			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-			<a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModalEdit" data-case_id="'.$casefee->case_id.'" data-remarks="'.$casefee->remarks.'" data-payment="'.$casefee->payment_by.'" data-date="'.date('m/d/Y', strtotime($casefee->date_receive)).'">Edit</a>
-			<a class="dropdown-item delete_casefee" href="#" data-id="'.$casefee->case_id.'">Delete</a>
-			</div>';
+			$row[] = $casefee->bill_remark;
+			$row[] = $casefee->paid_by;
+			$row[] = $date;
 
 			$data[] = $row;
 		}
@@ -69,5 +69,63 @@ class Casefee extends CI_Controller {
 		);
         //output to json format
 		echo json_encode($output);
+	}
+
+	// Import Format Casefee
+	private $filename = "import_data";
+
+	public function importCasefee(){
+		date_default_timezone_set('Asia/Jakarta');
+
+		// Load plugin PHPExcel nya
+		include APPPATH.'third_party/PHPExcel/PHPExcel.php';
+
+		$this->load->library('upload'); // Load librari upload
+
+		$config['upload_path'] = './assets/excel/';
+		$config['allowed_types'] = 'xlsx';
+		$config['max_size'] = '10485760';
+		$config['overwrite'] = true;
+		$config['file_name'] = $this->filename;
+
+		$this->upload->initialize($config);
+		if($this->upload->do_upload('file')){
+			$excelreader = new PHPExcel_Reader_Excel2007();
+			$loadexcel = $excelreader->load('assets/excel/'.$this->filename.'.xlsx');
+			$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
+
+			$data = array();
+
+			$numrow = 1;
+			foreach($sheet as $row){
+				if($numrow > 1){
+					array_push($data, array(
+						'case_id'=>$row['A'], 
+						'bill_remark'=>$row['B'], 
+						'paid_by'=>$row['D'],
+						'date_receive_payment'=> date('Y-m-d', strtotime($row['E'])),
+						'edit_date'=> date("Y-m-d H:i:s"),
+						'edited_by'=> $row['D'],
+					));
+				}
+
+				$numrow++;
+			}
+
+			$upload = $this->db->update_batch('`case`', $data, 'case_id');
+
+			if($upload) {
+				$this->session->set_flashdata("notif1", "Data Berhasil Disimpan");
+				redirect('Casefee');
+			} else {
+				$this->session->set_flashdata("notif2", "Data Gagal Disimpan");
+				redirect('Casefee');
+			}
+		}else{
+			$this->session->set_flashdata("notif2", "File Gagal Di Upload");
+			redirect('Casefee');
+		}
+		
+		
 	}
 }

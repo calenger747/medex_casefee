@@ -11,4 +11,8 @@
   <link href="<?= base_url(); ?>assets/css/material-dashboard.minf066.css" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="<?= base_url(); ?>assets/demo/demo.css" rel="stylesheet" />
+
+  <script src="<?= base_url(); ?>assets/js/core/jquery.min.js"></script>
+  <!--  Plugin for Sweet Alert -->
+  <script src="<?= base_url(); ?>assets/js/plugins/sweetalert2.min.js"></script>
 </head>
