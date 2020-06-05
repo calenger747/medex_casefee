@@ -3,8 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_Casefee extends CI_Model{ 
 
     var $table = 'case'; 
-    var $column_order = array(null, 'case_id','bill_remark','paid_by','date_receive_payment'); //set column field database for datatable orderable 
-    var $column_search = array('case_id','bill_remark','paid_by','DATE_FORMAT(date_receive_payment, "%d %b %Y")'); //set column field database for datatable searchable 
+    var $column_order = array(null, 'case_number','bill_remarks','paid_by','date_receive_payment'); //set column field database for datatable orderable 
+    var $column_search = array('case_number','bill_remarks','paid_by','DATE_FORMAT(date_receive_payment, "%d %b %Y")'); //set column field database for datatable searchable 
     var $order = array('id_ref' => 'asc'); // default order 
  
     public function __construct()

@@ -154,3 +154,28 @@
   </div>
 </div>
 <!--  End Modal -->
+
+<?php if ($this->session->flashdata('notif1')): ?>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      swal({
+        title: "Berhasil !",
+        text: "<?php echo $this->session->flashdata('notif1'); ?>",
+        icon: "success",
+        timer: 10000
+      });
+    });
+  </script>
+<?php endif; ?>
+<?php if ($this->session->flashdata('notif2')): ?>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      swal({
+        title: "Maaf !",
+        text: "<?php echo $this->session->flashdata('notif2'); ?>",
+        icon: "error",
+        timer: 10000
+      });
+    });
+  </script>
+<?php endif; ?>

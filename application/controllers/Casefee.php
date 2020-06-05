@@ -53,8 +53,8 @@ class Casefee extends CI_Controller {
 			}
 
 			$row[] = $no;
-			$row[] = $casefee->case_id;
-			$row[] = $casefee->bill_remark;
+			$row[] = $casefee->case_number;
+			$row[] = $casefee->bill_remarks;
 			$row[] = $casefee->paid_by;
 			$row[] = $date;
 
@@ -100,8 +100,8 @@ class Casefee extends CI_Controller {
 			foreach($sheet as $row){
 				if($numrow > 1){
 					array_push($data, array(
-						'case_id'=>$row['A'], 
-						'bill_remark'=>$row['B'], 
+						'case_number'=>$row['A'], 
+						'bill_remarks'=>$row['B'], 
 						'paid_by'=>$row['D'],
 						'date_receive_payment'=> date('Y-m-d', strtotime($row['E'])),
 						'edit_date'=> date("Y-m-d H:i:s"),
@@ -112,7 +112,7 @@ class Casefee extends CI_Controller {
 				$numrow++;
 			}
 
-			$upload = $this->db->update_batch('`case`', $data, 'case_id');
+			$upload = $this->db->update_batch('`case`', $data, 'case_number');
 
 			if($upload) {
 				$this->session->set_flashdata("notif1", "Data Berhasil Disimpan");
